@@ -10,6 +10,12 @@ import { CdaHeaderComponent } from './cda-header/cda-header.component';
 import { CdaColorPickerComponent } from './cda-color-picker/cda-color-picker.component';
 import { CdaChartTypePickerComponent } from './cda-chart-type-picker/cda-chart-type-picker.component';
 import { CdaButtonComponent } from './cda-button/cda-button.component';
+import { CdaChartAreaComponent } from './cda-chart-area/cda-chart-area.component';
+import { DtDonutChartComponent } from './dt-donut-chart/dt-donut-chart.component';
+import { DtPieChartComponent } from './dt-pie-chart/dt-pie-chart.component';
+import { HttpClientModule } from '@angular/common/http';
+import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { DataService } from './services/data.service';
 
 @NgModule({
   declarations: [
@@ -18,13 +24,18 @@ import { CdaButtonComponent } from './cda-button/cda-button.component';
     CdaHeaderComponent,
     CdaColorPickerComponent,
     CdaChartTypePickerComponent,
-    CdaButtonComponent
+    CdaButtonComponent,
+    CdaChartAreaComponent,
+    DtDonutChartComponent,
+    DtPieChartComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ColorPickerModule
+    ColorPickerModule,
+    HttpClientModule,
+    InMemoryWebApiModule.forRoot(DataService),
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ChartService } from '../services/chart.service';
 
 @Component({
   selector: 'app-cda-chart-type-picker',
@@ -7,12 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CdaChartTypePickerComponent implements OnInit {
 
-  public chartTypeList = [
-    { value : "D" , label : "Donut" },
-    { value : "P" , label : "Pie" }
-  ];
+  public chartTypeList = ChartService.dropdownLookup;
   public selectedType;
-  constructor() { }
+  constructor(private chartService: ChartService) { }
 
   ngOnInit() {
     this.selectedType = this.chartTypeList[0];
@@ -20,5 +18,7 @@ export class CdaChartTypePickerComponent implements OnInit {
 
   public onSelect() {
     console.log(this.selectedType);
+    this.chartService.setChartType(this.selectedType.value);
+    
   }
 }

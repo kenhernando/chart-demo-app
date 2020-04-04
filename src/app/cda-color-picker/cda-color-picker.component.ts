@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ChartService } from '../services/chart.service';
 
 @Component({
   selector: 'app-cda-color-picker',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CdaColorPickerComponent implements OnInit {
 
-  constructor() { }
+  constructor(private chartService: ChartService) { }
 
   ngOnInit() {
   }
-
+  public onChange(colorInput) {
+    this.chartService.setColor(colorInput);
+  }
 }

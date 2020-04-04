@@ -1,9 +1,9 @@
 <div class="row cda-margin-top">
-    <div class="col-xs-12 col-sm-2">
+    <div class="col-xs-12 offset-sm-4 col-sm-2">
         <label>Choose your color:</label>
     </div>
     <div class="col-xs-12 col-sm-2">
-        <input [(colorPicker)]="color" [style.background]="color" class="form-control"/>
+        <input [(colorPicker)]="color" [style.background]="color" class="form-control" (colorPickerChange)="onChange(this.color)"/>
     </div>
 </div>
 
