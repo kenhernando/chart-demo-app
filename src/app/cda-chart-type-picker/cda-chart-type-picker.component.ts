@@ -10,15 +10,17 @@ export class CdaChartTypePickerComponent implements OnInit {
 
   public chartTypeList = ChartService.dropdownLookup;
   public selectedType;
+  public partitionList = [];
   constructor(private chartService: ChartService) { }
 
   ngOnInit() {
     this.selectedType = this.chartTypeList[0];
+    this.chartService.apiLabelList$.subscribe((list)=> {
+      this.partitionList = list;
+    });
   }
 
   public onSelect() {
-    console.log(this.selectedType);
-    this.chartService.setChartType(this.selectedType.value);
-    
+    this.chartService.setIsDonut(this.selectedType.value == 'D');
   }
 }

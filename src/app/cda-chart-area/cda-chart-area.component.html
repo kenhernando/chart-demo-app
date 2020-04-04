@@ -7,11 +7,9 @@
     </div>
 </div>
 <ng-template #displayChart>
-    <div *ngIf="selectedType == 'D'">
-    </div>
     <div class="row cda-margin-top-50">
         <div class="col-xs-12 offset-sm-3 col-sm-6">
-            <app-dt-donut-chart #donutChart [inputParams]="inputParams" [color]="selectedColor"></app-dt-donut-chart>
+            <app-dt-donut-chart #donutChart [inputParams]="inputParams"></app-dt-donut-chart>
         </div>
     </div>
 </ng-template>

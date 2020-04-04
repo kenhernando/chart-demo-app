@@ -12,7 +12,6 @@ import { CdaChartTypePickerComponent } from './cda-chart-type-picker/cda-chart-t
 import { CdaButtonComponent } from './cda-button/cda-button.component';
 import { CdaChartAreaComponent } from './cda-chart-area/cda-chart-area.component';
 import { DtDonutChartComponent } from './dt-donut-chart/dt-donut-chart.component';
-import { DtPieChartComponent } from './dt-pie-chart/dt-pie-chart.component';
 import { HttpClientModule } from '@angular/common/http';
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { DataService } from './services/data.service';
@@ -26,8 +25,7 @@ import { DataService } from './services/data.service';
     CdaChartTypePickerComponent,
     CdaButtonComponent,
     CdaChartAreaComponent,
-    DtDonutChartComponent,
-    DtPieChartComponent
+    DtDonutChartComponent
   ],
   imports: [
     BrowserModule,

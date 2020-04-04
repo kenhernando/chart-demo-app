@@ -10,28 +10,37 @@ export class ChartService {
   SERVER_URL: string = 'http://localhost:8080/api/';
 
   public static dropdownLookup = [
-    { value : "D" , label : "Donut" },
-    { value : "P" , label : "Pie" }
+    { value: 'D', label: 'Donut' },
+    { value: 'P', label: 'Pie' }
   ];
-  private colorSubject  = new Subject<string>();
-  public colorObs$ : Observable<any> = this.colorSubject.asObservable();
-  private chartTypeSubject = new BehaviorSubject<string>("D");
-  public chartType$ : Observable<any> = this.chartTypeSubject.asObservable();
+  public static defaultChartColor = '#e0e0e0';
+
+  private colorListSubject = new BehaviorSubject<Array<string>>([ChartService.defaultChartColor]);
+  private isDonutSubject = new BehaviorSubject<boolean>(true);
   private apiDataSubject = new Subject<any>();
-  public apiData$ : Observable<any> = this.apiDataSubject.asObservable();
+  private apiLabelListSubject = new Subject<any>();
+
+  public colorListObs$: Observable<any> = this.colorListSubject.asObservable();
+  public isDonut$: Observable<any> = this.isDonutSubject.asObservable();
+  public apiData$: Observable<any> = this.apiDataSubject.asObservable();
+  public apiLabelList$: Observable<any> = this.apiLabelListSubject.asObservable();
 
   constructor(private httpClient: HttpClient) { }
 
-  public setColor(color: string) {
-    this.colorSubject.next(color);
+  public setColor(colorList: Array<string>) {
+    this.colorListSubject.next(colorList);
   }
 
-  public setChartType(type: string) {
-    this.chartTypeSubject.next(type);
+  public setIsDonut(isDonut: boolean) {
+    this.isDonutSubject.next(isDonut);
   }
 
   public setApiData(data: any) {
     this.apiDataSubject.next(data);
+  }
+
+  public setApiLabels(labelList: any) {
+    this.apiLabelListSubject.next(labelList);
   }
 
   public getChartData$() {

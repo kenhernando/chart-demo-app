@@ -1,8 +1,12 @@
 
 <app-cda-header></app-cda-header>
 <div class="container">
-    <app-cda-color-picker></app-cda-color-picker>
     <app-cda-chart-type-picker></app-cda-chart-type-picker>
     <app-cda-button></app-cda-button>
     <app-cda-chart-area></app-cda-chart-area>
+    <div *ngIf="apiLabelList != null" class="row">
+        <div *ngFor="let apiLabel of apiLabelList; let i = index" class="col-xs-12 col-sm-4">
+            <app-cda-color-picker [label]="apiLabel.label" (onColorPick)="toggleArrayValue($event, i)"></app-cda-color-picker>
+        </div>
+    </div>
 </div>

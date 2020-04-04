@@ -14,9 +14,15 @@ export class CdaButtonComponent implements OnInit {
   }
 
   public generateChart() {
-    this.chartService.getChartData$().subscribe( (resp)=> {
-      console.log(resp);
-      this.chartService.setApiData(resp);
+    this.chartService.getChartData$().subscribe( (resp: any)=> {
+      const apiLabelList : Array<string> = resp.map((elem, index)=> {
+        return { 'index' : index, 'label' : elem.label };
+      });
+      const apiDataList = resp.map((elem)=> {
+        return elem.value;
+      });
+      this.chartService.setApiData(apiDataList);
+      this.chartService.setApiLabels(apiLabelList);
     });
   }
 

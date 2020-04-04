@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ChartService } from '../services/chart.service';
 
 @Component({
@@ -8,11 +8,15 @@ import { ChartService } from '../services/chart.service';
 })
 export class CdaColorPickerComponent implements OnInit {
 
-  constructor(private chartService: ChartService) { }
+  constructor() { }
 
+  @Input() label;
+  @Output() onColorPick: EventEmitter<any> = new EventEmitter();
+
+  public color = "#e0e0e0";
   ngOnInit() {
   }
   public onChange(colorInput) {
-    this.chartService.setColor(colorInput);
+    this.onColorPick.emit(colorInput);
   }
 }

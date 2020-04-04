@@ -6,7 +6,8 @@ import { ChartService } from '../services/chart.service';
 
 export interface InputParams {
   chartData : number[],
-  color: string
+  color: string,
+  isDonut: boolean
 }
 
 @Component({
@@ -25,14 +26,14 @@ export class CdaChartAreaComponent implements OnInit {
 
   ngOnInit() {
     combineLatest(
-      this.chartService.colorObs$,
-      this.chartService.chartType$,
+      this.chartService.colorListObs$,
+      this.chartService.isDonut$,
       this.chartService.apiData$
-    ).subscribe(([color, type, data] : any) => {
-      this.selectedType = type;
+    ).subscribe(([colorList, isDonut, data] : any) => {
       this.inputParams = {
-        chartData : data,
-        color: color
+        color: colorList,
+        isDonut: isDonut,
+        chartData : data
       }
     }); 
   }

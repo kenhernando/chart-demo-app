@@ -8,7 +8,6 @@ export class DonutChartDatum {
     count: number;
 }
 
-
 @Component({
     selector: 'app-dt-donut-chart',
     encapsulation: ViewEncapsulation.None,
@@ -37,9 +36,6 @@ export class DtDonutChartComponent implements OnInit, OnChanges {
 
     // Pie function - transforms raw data to arc segment parameters
     pie = d3.pie()
-        .startAngle(-0.5 * Math.PI)
-        .endAngle(0.5 * Math.PI)
-        .sort(null)
         .value((d: number) => d);
 
     constructor(private elRef: ElementRef) {
@@ -49,37 +45,34 @@ export class DtDonutChartComponent implements OnInit, OnChanges {
     ngOnInit() { }
 
     ngOnChanges(changes: SimpleChanges) {
-        console.log(changes);
-        console.log(changes.inputParams);
         if (changes.inputParams) {
-            this.updateChart(changes.inputParams.currentValue);
+            this.createChart(changes.inputParams.currentValue);
         }
     }
 
-    private createChart(data: number[], color:string) {
+    private createChart(inputParams) {
 
-        this.processPieData(data);
+        this.processPieData(inputParams.chartData);
 
         this.removeExistingChartFromParent();
 
         this.setChartDimensions();
 
-        this.setColorScale(data, color);
+        this.setColorScale(inputParams);
 
         this.addGraphicsElement();
 
-        this.setupArcGenerator();
+        this.setupArcGenerator(inputParams);
 
         this.addSlicesToTheDonut();
 
         this.addLabelsToTheDonut();
 
-        this.addDonutTotalLabel();
     }
 
 
     private setChartDimensions() {
-        let viewBoxHeight = 100;
+        let viewBoxHeight = 200;
         let viewBoxWidth = 200;
         this.svg = d3.select(this.hostElement).append('svg')
             .attr('width', '100%')
@@ -92,10 +85,8 @@ export class DtDonutChartComponent implements OnInit, OnChanges {
             .attr("transform", "translate(100,90)");
     }
 
-    private setColorScale(data, color) {
-        // this.colorScale = d3.scaleOrdinal(d3.schemeCategory10);
-        // Below is an example of using custom colors
-        this.colorScale = d3.scaleOrdinal().domain(data).range([color]);
+    private setColorScale(inputParams) {
+        this.colorScale = d3.scaleOrdinal().domain(inputParams.chartData).range(inputParams.color);
     }
 
     private processPieData(data, initial = true) {
@@ -109,8 +100,8 @@ export class DtDonutChartComponent implements OnInit, OnChanges {
     }
 
 
-    private setupArcGenerator() {
-        this.innerRadius = 50;
+    private setupArcGenerator(inputParams) {
+        this.innerRadius = inputParams.isDonut ? 50 : 0;
         this.radius = 80;
         this.arc = d3.arc()
             .innerRadius(this.innerRadius)
@@ -126,18 +117,9 @@ export class DtDonutChartComponent implements OnInit, OnChanges {
             .attr('fill', (datum, index) => {
                 return this.colorScale(`${index}`);
             })
+            .style('stroke', 'white')
+            .style('stroke-width', '0.5px')
             .style('opacity', 1);
-    }
-
-    private addDonutTotalLabel() {
-        this.totalLabel = this.svg
-            .append('text')
-            .text(this.total)
-            .attr('id', 'total')
-            .attr('x', 100)
-            .attr('y', 80)
-            .style('font-size', '10px')
-            .style('text-anchor', 'middle');
     }
 
     // Creates an "interpolator" for animated transition for arc slices
@@ -162,43 +144,7 @@ export class DtDonutChartComponent implements OnInit, OnChanges {
         }
     }
 
-    public updateChart(inputParams) {
-        // if (!this.svg) {
-            this.createChart(inputParams.chartData, inputParams.color);
-            // return;
-        // }
-
-        this.processPieData(inputParams.chartData, false);
-
-        this.updateSlices();
-
-        this.updateLabels();
-
-    }
-
-    private updateSlices() {
-        this.slices = this.slices.data(this.pieData);
-        this.slices.transition().duration(750).attrTween("d", this.arcTween);
-    }
-
-    private updateLabels() {
-        this.totalLabel.text(this.total);
-        this.labels.data(this.pieData);
-        this.labels.each((datum, index, n) => {
-            d3.select(n[index]).text(this.labelValueFn(this.rawData[index]));
-        });
-        this.labels.transition().duration(750).attrTween("transform", this.labelTween);
-    }
-
-    private updateTotal() {
-        this.totalLabel.text(this.total);
-    }
-
     private removeExistingChartFromParent() {
-        // !!!!Caution!!!
-        // Make sure not to do;
-        //     d3.select('svg').remove();
-        // That will clear all other SVG elements in the DOM
         d3.select(this.hostElement).select('svg').remove();
     }
 
