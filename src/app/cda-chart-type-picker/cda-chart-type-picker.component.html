@@ -1,0 +1,13 @@
+<div class="row cda-margin-top">
+    <div class="col-xs-12 col-sm-2">
+        <label>Pie Chart Type:</label>
+    </div>
+    <div class="col-xs-12 col-sm-2">
+        <select class="form-control" [(ngModel)]="selectedType" (change)="onSelect()">
+            <option *ngFor="let type of chartTypeList" [ngValue]="type" >
+                {{type.label}}
+            </option>
+        </select>
+    </div>
+</div>
+
