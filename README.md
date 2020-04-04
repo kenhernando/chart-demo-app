@@ -8,7 +8,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 ## References
 
-`https://medium.com/better-programming/reactive-charts-in-angular-8-using-d3-4550bb0b4255`
-`https://www.d3-graph-gallery.com/graph/donut_basic.html`
-`https://www.npmjs.com/package/ngx-color-picker`
-`https://github.com/angular/in-memory-web-api`
+* `https://medium.com/better-programming/reactive-charts-in-angular-8-using-d3-4550bb0b4255`
+* `https://www.d3-graph-gallery.com/graph/donut_basic.html`
+* `https://www.npmjs.com/package/ngx-color-picker`
+* `https://github.com/angular/in-memory-web-api`
