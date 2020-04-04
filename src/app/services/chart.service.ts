@@ -15,32 +15,32 @@ export class ChartService {
   ];
   public static defaultChartColor = '#e0e0e0';
 
-  private colorListSubject = new BehaviorSubject<Array<string>>([ChartService.defaultChartColor]);
-  private isDonutSubject = new BehaviorSubject<boolean>(true);
-  private apiDataSubject = new Subject<any>();
-  private apiLabelListSubject = new Subject<any>();
+  private colorList = new BehaviorSubject<Array<string>>([ChartService.defaultChartColor]);
+  private isDonut = new BehaviorSubject<boolean>(true);
+  private apiData = new Subject<any>();
+  private apiLabelList = new Subject<any>();
 
-  public colorListObs$: Observable<any> = this.colorListSubject.asObservable();
-  public isDonut$: Observable<any> = this.isDonutSubject.asObservable();
-  public apiData$: Observable<any> = this.apiDataSubject.asObservable();
-  public apiLabelList$: Observable<any> = this.apiLabelListSubject.asObservable();
+  public colorListObs$: Observable<any> = this.colorList.asObservable();
+  public isDonut$: Observable<any> = this.isDonut.asObservable();
+  public apiData$: Observable<any> = this.apiData.asObservable();
+  public apiLabelList$: Observable<any> = this.apiLabelList.asObservable();
 
   constructor(private httpClient: HttpClient) { }
 
   public setColor(colorList: Array<string>) {
-    this.colorListSubject.next(colorList);
+    this.colorList.next(colorList);
   }
 
   public setIsDonut(isDonut: boolean) {
-    this.isDonutSubject.next(isDonut);
+    this.isDonut.next(isDonut);
   }
 
   public setApiData(data: any) {
-    this.apiDataSubject.next(data);
+    this.apiData.next(data);
   }
 
   public setApiLabels(labelList: any) {
-    this.apiLabelListSubject.next(labelList);
+    this.apiLabelList.next(labelList);
   }
 
   public getChartData$() {
