@@ -1,8 +1,10 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { Router } from '@angular/router';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
+  let routerSpy = {navigate: jasmine.createSpy('navigate')};
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -11,6 +13,9 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent
       ],
+      providers: [
+        { provide: Router, useValue: routerSpy }
+      ]
     }).compileComponents();
   }));
 
@@ -26,10 +31,9 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('chart-demo-app');
   });
 
-  it('should render title', () => {
+  it('navigate to home', ()=> {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('chart-demo-app app is running!');
-  });
+    expect (routerSpy.navigate).toHaveBeenCalledWith(['home']);
+});
 });

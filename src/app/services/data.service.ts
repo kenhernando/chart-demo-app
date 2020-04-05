@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { InMemoryDbService } from 'angular-in-memory-web-api';
+import { ChartDto } from '../model/chart-dto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ export class DataService implements InMemoryDbService {
   constructor() { }
   createDb() {
 
-    const chartData = [
+    const chartData: Array<ChartDto> = [
       {
         'label': 'Pie 1',
         'value': 10

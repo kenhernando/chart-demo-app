@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject, Observable, BehaviorSubject } from 'rxjs';
-
+import { tap } from 'rxjs/operators';
+import { ChartDto } from '../model/chart-dto.model'
 @Injectable({
   providedIn: 'root'
 })
@@ -17,13 +18,11 @@ export class ChartService {
 
   private colorList = new BehaviorSubject<Array<string>>([ChartService.defaultChartColor]);
   private isDonut = new BehaviorSubject<boolean>(true);
-  private apiData = new Subject<any>();
-  private apiLabelList = new Subject<any>();
+  private apiData = new Subject<Array<ChartDto>>();
 
-  public colorListObs$: Observable<any> = this.colorList.asObservable();
-  public isDonut$: Observable<any> = this.isDonut.asObservable();
-  public apiData$: Observable<any> = this.apiData.asObservable();
-  public apiLabelList$: Observable<any> = this.apiLabelList.asObservable();
+  public colorListObs$: Observable<Array<string>> = this.colorList.asObservable();
+  public isDonut$: Observable<boolean> = this.isDonut.asObservable();
+  public apiDataList$: Observable<Array<ChartDto>> = this.apiData.asObservable();
 
   constructor(private httpClient: HttpClient) { }
 
@@ -35,15 +34,9 @@ export class ChartService {
     this.isDonut.next(isDonut);
   }
 
-  public setApiData(data: any) {
-    this.apiData.next(data);
-  }
-
-  public setApiLabels(labelList: any) {
-    this.apiLabelList.next(labelList);
-  }
-
-  public getChartData$() {
-    return this.httpClient.get(`${this.SERVER_URL}chartData`);
+  public getChartData() {
+    return this.httpClient.get<Array<ChartDto>>(`${this.SERVER_URL}chartData`).pipe(
+      tap((res) => this.apiData.next(res)
+    ));
   }
 }

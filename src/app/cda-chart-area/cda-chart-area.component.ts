@@ -28,12 +28,15 @@ export class CdaChartAreaComponent implements OnInit {
     combineLatest(
       this.chartService.colorListObs$,
       this.chartService.isDonut$,
-      this.chartService.apiData$
-    ).subscribe(([colorList, isDonut, data] : any) => {
+      this.chartService.apiDataList$
+    ).subscribe(([colorList, isDonut, dataList] : any) => {
+      const apiDataList = dataList.map((elem) => {
+        return elem.value;
+      });
       this.inputParams = {
         color: colorList,
         isDonut: isDonut,
-        chartData : data
+        chartData : apiDataList
       }
     }); 
   }

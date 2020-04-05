@@ -22,4 +22,10 @@ describe('DtDonutChartComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  /**
+   * No need to unit test private methods. 
+   * This component shouuld be kept in isolation in all circumstances. 
+   * */
+
 });

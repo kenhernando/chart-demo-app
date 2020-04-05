@@ -13,8 +13,12 @@ export class HomeComponent implements OnInit {
   constructor(private chartService: ChartService) { }
 
   ngOnInit() {
-    this.chartService.apiLabelList$.subscribe((list)=> {
-      this.apiLabelList = list;
+    this.chartService.apiDataList$.subscribe((list)=> {
+      this.apiLabelList = list.map((elem) => {
+        return { 'label': elem.label };
+      });
+
+      /** refresh color list every data retrieval */
       this.apiColorList = [];
       list.forEach(()=> {
         this.apiColorList.push(ChartService.defaultChartColor);

@@ -122,28 +122,6 @@ export class DtDonutChartComponent implements OnInit, OnChanges {
             .style('opacity', 1);
     }
 
-    // Creates an "interpolator" for animated transition for arc slices
-    //   given previous and new arc shapes,
-    //   generates a series of arc shapes (be)tween start and end state
-    arcTween = (datum, index) => {
-        const interpolation = d3.interpolate(this.pieDataPrevious[index], datum);
-        this.pieDataPrevious[index] = interpolation(0);
-        return (t) => {
-            return this.arc(interpolation(t));
-        }
-    }
-
-    // Creates an "interpolator" for animated transition for arc labels
-    //   given previous and new label positions,
-    //   generates a series of arc states (be)tween start and end state
-    labelTween = (datum, index) => {
-        const interpolation = d3.interpolate(this.pieDataPrevious[index], datum);
-        this.pieDataPrevious[index] = interpolation(0);
-        return (t) => {
-            return 'translate(' + this.arc.centroid(interpolation(t)) + ')';
-        }
-    }
-
     private removeExistingChartFromParent() {
         d3.select(this.hostElement).select('svg').remove();
     }
